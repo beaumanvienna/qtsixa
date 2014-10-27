@@ -334,6 +334,7 @@ void hid_server(int ctl, int csk, int isk, int debug, int legacy)
         if (events & POLLIN) {
             if (debug) syslog(LOG_INFO, "One event received");
             l2cap_accept(ctl, csk, isk, debug, legacy);
+            syslog(LOG_INFO, "RetroRig: hid_server: after l2cap_accept ctl=%d, int csk=%d, int isk=%d)", ctl, csk, isk);
             if (debug) syslog(LOG_INFO, "One event proccessed");
         }
 
@@ -353,6 +354,8 @@ int create_device(int ctl, int csk, int isk)
      bdaddr_t src, dst;
      char bda[18];
      int err;
+     
+     syslog(LOG_INFO, "RetroRig: create_device(int ctl=%d, int csk=%d, int isk=%d)", ctl, csk, isk);
 
      memset(&addr, 0, sizeof(addr));
      addrlen = sizeof(addr);

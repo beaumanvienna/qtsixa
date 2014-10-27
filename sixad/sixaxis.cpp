@@ -14,7 +14,7 @@
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  */
-
+//make && sudo service sixad stop && sudo cp bins/sixad-bin /usr/sbin/sixad-bin && sudo cp bins/sixad-sixaxis /usr/sbin/sixad-sixaxis  && sudo service sixad start
 #include "sixaxis.h"
 #include "uinput.h"
 #include "shared.h"
@@ -459,18 +459,29 @@ int set_sixaxis_led(int csk, struct dev_led led, int rumble)
         0x1C, 0x1E  // 9, 10
     };
 
-    if (led.enabled) {
+    if (led.enabled) 
+    {
         if (led.auto_sel)
+        {
             led_number = get_joystick_number();
+            syslog(LOG_INFO, "RetroRig: in set_sixaxis_led led_number = get_joystick_number();");
+        }
         else
+        {
             led_number = led.number;
-
-        if (led_number < 1) {
+            syslog(LOG_INFO, "RetroRig: in set_sixaxis_led led_number = led.number;");
+        }
+        if (led_number < 1) 
+        {
             led_n = 1;
-        } else if (led_number > 10) {
+            syslog(LOG_INFO, "RetroRig: in set_sixaxis_led led_n = 1;");
+        } else if (led_number > 10) 
+        {
             led_n = 10;
+            syslog(LOG_INFO, "RetroRig: in set_sixaxis_led led_n = 10;");
         } else {
             led_n = led_number;
+            syslog(LOG_INFO, "RetroRig: in set_sixaxis_led led_n = led_number =%d",led_n);
         }
     } else
         led_n = 0;
